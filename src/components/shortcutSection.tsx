@@ -1,7 +1,21 @@
+import { useState } from "react";
 
 //hardcoded slop for first iteration and making initial page function
 //TO-DO: Rip out components for shortcutCategory and shortcut. Must remove hardcoded svgs and URLs and store this data instead such that users can fetch and create their own shortcuts
 const ShortcutSection = () => {
+
+    const [pastedSvg, setPastedSvg] = useState<string>("");
+
+    const handleSetSvgTest = () => {
+        let modifiedSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960"><path d="M480-720q-33 0-56.5-23.5T400-800t23.5-56.5T480-880t56.5 23.5T560-800t-23.5 56.5T480-720M360-80v-520q-60-5-122-15t-118-25l20-80q78 21 166 30.5t174 9.5 174-9.5T820-720l20 80q-56 15-118 25t-122 15v520h-80v-240h-80v240z"/></svg>';
+        modifiedSvg = modifiedSvg.replace(/(width|height)=".*?"/g, "");
+        modifiedSvg = modifiedSvg.replace(
+        /<svg/,
+        `<svg width="48" height="48"`
+        );
+        
+        setPastedSvg(modifiedSvg)
+    }
 
     return (
       <div className="w-6/12">
@@ -9,12 +23,19 @@ const ShortcutSection = () => {
             
                 <div className="p-4">
                     <h2>Dev</h2>
-                    <div className="flex justify-start">
+                    <div className="flex justify-start items-center">
                         <div className="p-4">
                             <a href="https://chatgpt.com/">
                                 <svg  role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="Openai--Streamline-Simple-Icons" height="48" width="48"><desc>Openai Streamline Icon: https://streamlinehq.com</desc><title>OpenAI</title><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0 -0.5157 -4.9108 6.0462 6.0462 0 0 0 -6.5098 -2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0 -3.9977 2.9 6.0462 6.0462 0 0 0 0.7427 7.0966 5.98 5.98 0 0 0 0.511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718 -4.2058 5.9894 5.9894 0 0 0 3.9977 -2.9001 6.0557 6.0557 0 0 0 -0.7475 -7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1 -2.8764 -1.0408l0.1419 -0.0804 4.7783 -2.7582a0.7948 0.7948 0 0 0 0.3927 -0.6813v-6.7369l2.02 1.1686a0.071 0.071 0 0 1 0.038 0.052v5.5826a4.504 4.504 0 0 1 -4.4945 4.4944zm-9.6607 -4.1254a4.4708 4.4708 0 0 1 -0.5346 -3.0137l0.142 0.0852 4.783 2.7582a0.7712 0.7712 0 0 0 0.7806 0l5.8428 -3.3685v2.3324a0.0804 0.0804 0 0 1 -0.0332 0.0615L9.74 19.9502a4.4992 4.4992 0 0 1 -6.1408 -1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655 -1.9728V11.6a0.7664 0.7664 0 0 0 0.3879 0.6765l5.8144 3.3543 -2.0201 1.1685a0.0757 0.0757 0 0 1 -0.071 0l-4.8303 -2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a0.0757 0.0757 0 0 1 0.071 0l4.8303 2.7913a4.4944 4.4944 0 0 1 -0.6765 8.1042v-5.6772a0.79 0.79 0 0 0 -0.407 -0.667zm2.0107 -3.0231 -0.142 -0.0852 -4.7735 -2.7818a0.7759 0.7759 0 0 0 -0.7854 0L9.409 9.2297V6.8974a0.0662 0.0662 0 0 1 0.0284 -0.0615l4.8303 -2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02 -1.1638a0.0804 0.0804 0 0 1 -0.038 -0.0567V6.0742a4.4992 4.4992 0 0 1 7.3757 -3.4537l-0.142 0.0805L8.704 5.459a0.7948 0.7948 0 0 0 -0.3927 0.6813zm1.0976 -2.3654 2.602 -1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997 -2.6067 -1.4997Z" fill="#e5e7eb" stroke-width="1"></path></svg>
                             </a>
-                            </div>
+                        </div>
+                        <div className="p-4">
+                            <a href="https://github.com/">
+                            <svg height="48" aria-hidden="true" viewBox="0 0 24 24" version="1.1" width="48" data-view-component="true">
+                                <path d="M12.5.75C6.146.75 1 5.896 1 12.25c0 5.089 3.292 9.387 7.863 10.91.575.101.79-.244.79-.546 0-.273-.014-1.178-.014-2.142-2.889.532-3.636-.704-3.866-1.35-.13-.331-.69-1.352-1.18-1.625-.402-.216-.977-.748-.014-.762.906-.014 1.553.834 1.769 1.179 1.035 1.74 2.688 1.25 3.349.948.1-.747.402-1.25.733-1.538-2.559-.287-5.232-1.279-5.232-5.678 0-1.25.445-2.285 1.178-3.09-.115-.288-.517-1.467.115-3.048 0 0 .963-.302 3.163 1.179.92-.259 1.897-.388 2.875-.388.977 0 1.955.13 2.875.388 2.2-1.495 3.162-1.179 3.162-1.179.633 1.581.23 2.76.115 3.048.733.805 1.179 1.825 1.179 3.09 0 4.413-2.688 5.39-5.247 5.678.417.36.776 1.05.776 2.128 0 1.538-.014 2.774-.014 3.162 0 .302.216.662.79.547C20.709 21.637 24 17.324 24 12.25 24 5.896 18.854.75 12.5.75Z" fill="#e5e7eb"></path>
+                            </svg>
+                            </a>
+                        </div>
                         <div className="p-4">
                             <a href="https://nerdcave.com/tailwind-cheat-sheet">
                                 <svg role="img" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" id="Tailwindcss--Streamline-Simple-Icons" height="48" width="48"><desc>Tailwindcss Streamline Icon: https://streamlinehq.com</desc><title>Tailwind CSS</title><path d="M24.002 9.6c-6.4 0 -10.4 3.2 -12 9.6 2.4 -3.2 5.2 -4.4 8.4 -3.6 1.826 0.456 3.13 1.78 4.576 3.248C27.332 21.236 30.054 24 36.002 24c6.4 0 10.4 -3.2 12 -9.6 -2.4 3.2 -5.2 4.4 -8.4 3.6 -1.826 -0.456 -3.13 -1.78 -4.576 -3.248C32.674 12.364 29.952 9.6 24.002 9.6zm-12 14.4c-6.4 0 -10.4 3.2 -12 9.6 2.4 -3.2 5.2 -4.4 8.4 -3.6 1.826 0.456 3.13 1.78 4.576 3.248 2.354 2.388 5.076 5.152 11.024 5.152 6.4 0 10.4 -3.2 12 -9.6 -2.4 3.2 -5.2 4.4 -8.4 3.6 -1.826 -0.456 -3.13 -1.78 -4.576 -3.248C20.674 26.764 17.952 24 12.002 24z" fill="#e5e7eb" stroke-width="1"></path></svg>
@@ -82,10 +103,15 @@ const ShortcutSection = () => {
                             </svg>
                             </a>
                         </div>
+                        <div className="p-4">
+                            <a href="https://calendar.google.com/calendar/u/0/r">
+                            <svg width="48" height="48" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 2H13V1h-1v1H4V1H3v1H1.5l-.5.5v12l.5.5h13l.5-.5v-12l-.5-.5zM14 14H2V5h12v9zm0-10H2V3h12v1zM4 8H3v1h1V8zm-1 2h1v1H3v-1zm1 2H3v1h1v-1zm2-4h1v1H6V8zm1 2H6v1h1v-1zm-1 2h1v1H6v-1zm1-6H6v1h1V6zm2 2h1v1H9V8zm1 2H9v1h1v-1zm-1 2h1v1H9v-1zm1-6H9v1h1V6zm2 2h1v1h-1V8zm1 2h-1v1h1v-1zm-1-4h1v1h-1V6z"/></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
-                <div className="p-4">
+                <div className="p-4" onClick={() => handleSetSvgTest()}>
                     <h2>Financial</h2>
                     <div className="flex justify-start">
                         <div className="p-4">
@@ -100,6 +126,27 @@ const ShortcutSection = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="p-4">
+                    <h2>Test</h2>
+                    <div className="flex justify-start">
+                        {pastedSvg ? 
+                            (
+                                <div className="p-4">
+                                    <a href="https://google.com/">
+                                        <div 
+                                            className="w-12 h-12 fill-[#e5e7eb]"
+                                            dangerouslySetInnerHTML={{__html: pastedSvg}}
+                                        />
+                                    </a>
+                                </div>
+                            ) :
+                            (
+                                <p>No SVG selected yet</p>
+                            )}
+                    </div>
+                </div>
+
         </div>
       </div>
     )
