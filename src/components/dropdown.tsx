@@ -23,9 +23,9 @@ interface DropdownProps{
                     </svg>
             </button>
         {dropdownOpen &&
-        <ul className="absolute w-20 bg-neutral-800">
+        <ul className="absolute w-20 bg-neutral-800 z-10">
             {optionsCollection.map((option) =>(
-                <li className="flex justify-end cursor-pointer border border-gray-600 p-1">
+                <li className="flex justify-end cursor-pointer border border-gray-600 p-1 z-10">
                     {option.label}
                 </li>
             ))}

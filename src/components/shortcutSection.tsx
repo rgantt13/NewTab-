@@ -1,8 +1,10 @@
 import { useState } from "react";
+import NewShortcut from "./newShortcut";
+import NewShortcutCategory from "./newShortcutCategory";
 
 //hardcoded slop for first iteration and making initial page function
 //TO-DO: Rip out components for shortcutCategory and shortcut. Must remove hardcoded svgs and URLs and store this data instead such that users can fetch and create their own shortcuts
-const ShortcutSection = () => {
+const ShortcutSection = ({unlocked}: {unlocked: boolean}) => {
 
     const [pastedSvg, setPastedSvg] = useState<string>("");
 
@@ -13,7 +15,7 @@ const ShortcutSection = () => {
         /<svg/,
         `<svg width="48" height="48"`
         );
-        
+
         setPastedSvg(modifiedSvg)
     }
 
@@ -124,13 +126,17 @@ const ShortcutSection = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e5e7eb" stroke-width="2"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" /><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 16 6 6" /><circle cx="16" cy="9" r="2.9" /><circle cx="6" cy="5" r="3" /></svg>
                             </a>
                         </div>
+                        {unlocked &&
+                            <NewShortcut/>
+                        }
                     </div>
                 </div>
 
+                
                 <div className="p-4">
                     <h2>Test</h2>
                     <div className="flex justify-start">
-                        {pastedSvg ? 
+                        {pastedSvg && unlocked ? 
                             (
                                 <div className="p-4">
                                     <a href="https://google.com/">
@@ -146,6 +152,10 @@ const ShortcutSection = () => {
                             )}
                     </div>
                 </div>
+
+                {unlocked &&
+                    <NewShortcutCategory/>
+                }
 
         </div>
       </div>
