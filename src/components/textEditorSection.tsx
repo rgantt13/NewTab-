@@ -11,25 +11,22 @@ import BulletList from "@tiptap/extension-bullet-list"
 import { Button } from '@mantine/core';
 import TurndownService from "turndown"
 
-const content =""
 const turndownService = new TurndownService({headingStyle : "atx",});
 
+    // Remove <p> tags inside <li> because mantine rich text editor is fun
+    // Filter checks for ol and increments rewrite list element number
 const listCounters = new Map<Node, number>();
 turndownService.addRule("tight-list", {
   filter: ["li"],
   replacement: function (content, node) {
-    // Remove <p> tags inside <li>
     const cleanedContent = node.innerHTML.replace(/<\/?p>/g, "").trim();
-
     let prefix = "* ";
 
     if (node.parentElement?.nodeName === "OL") {
-      // Check if the parent <ol> is already in the map
       if (!listCounters.has(node.parentElement)) {
-        listCounters.set(node.parentElement, 1); // Initialize counter
+        listCounters.set(node.parentElement, 1);
       }
 
-      // Use current number, then increment
       prefix = `${listCounters.get(node.parentElement)}. `;
       listCounters.set(node.parentElement, listCounters.get(node.parentElement)! + 1);
     }
@@ -55,7 +52,6 @@ const TextEditorSection = () => {
       BulletList,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content,
     editorProps: {
         attributes: {
             class: 'h-full prose prose-sm focus:outline-none text-left',
