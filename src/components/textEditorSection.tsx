@@ -7,13 +7,40 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import Code from "@tiptap/extension-code"
+import BulletList from "@tiptap/extension-bullet-list"
 import { Button } from '@mantine/core';
+import TurndownService from "turndown"
 
-const content =
-  '<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>';
+const content =""
+const turndownService = new TurndownService({headingStyle : "atx",});
 
-  //TODO Bullets and Number list appear to be broken. Must thoroughly go through each feature of rich text editor to ensure the remaining features are working.
-  //TODO Save to file button.
+const listCounters = new Map<Node, number>();
+turndownService.addRule("tight-list", {
+  filter: ["li"],
+  replacement: function (content, node) {
+    // Remove <p> tags inside <li>
+    const cleanedContent = node.innerHTML.replace(/<\/?p>/g, "").trim();
+
+    let prefix = "* ";
+
+    if (node.parentElement?.nodeName === "OL") {
+      // Check if the parent <ol> is already in the map
+      if (!listCounters.has(node.parentElement)) {
+        listCounters.set(node.parentElement, 1); // Initialize counter
+      }
+
+      // Use current number, then increment
+      prefix = `${listCounters.get(node.parentElement)}. `;
+      listCounters.set(node.parentElement, listCounters.get(node.parentElement)! + 1);
+    }
+
+    return `${prefix}${cleanedContent}\n`;
+  },
+});
+
+  //TODO Bugfix .md output. Implementation halfway there but certain features are not appearing in .md viewer (Obsidian)
+    // Correctly converting... headings, bold, italics, underline, bullet list, numbered list, code, quote, linebreak and link
+    // Problems converting... strikethrough, subscript, superscript, and highlight
   //TODO Save existing text content to local storage to persist through sessions.
 const TextEditorSection = () => {
   const editor = useEditor({
@@ -25,20 +52,24 @@ const TextEditorSection = () => {
       SubScript,
       Highlight,
       Code,
+      BulletList,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     content,
     editorProps: {
         attributes: {
-            class: 'h-full prose prose-sm focus:outline-none',
+            class: 'h-full prose prose-sm focus:outline-none text-left',
           }
       },
   });
 
-  const handleSaveText = async (text: Blob) => {
+  const handleSaveText = async (text: string) => {
     const textDoc = document.createElement("a");
     textDoc.download = "note.md";
-    textDoc.href = URL.createObjectURL(text);
+    console.log("Html before made md -> \n", text)
+    const markdownText = turndownService.turndown(text);
+    const textBlob = new Blob([markdownText], {type: "application/json"})
+    textDoc.href = URL.createObjectURL(textBlob);
     textDoc.addEventListener('click', () => {
       setTimeout(() => URL.revokeObjectURL(textDoc.href), 30 * 1000)
     })
@@ -51,7 +82,7 @@ const TextEditorSection = () => {
     <div className=' w-6/12 h-4/6'>
     <RichTextEditor 
         classNames={{
-            content: 'h-96 max-h-96 overflow-y-auto p-4', // Target the actual content-editable div
+            content: 'h-96 max-h-96 overflow-y-auto p-4 list-disc list-inside', // Target the actual content-editable div    content: "list-disc list-inside", // Applies proper bullet list styling
         }} 
         editor={editor}
     >
@@ -100,7 +131,7 @@ const TextEditorSection = () => {
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
-          <Button className='text-green-400 bg-neutral-700' onClick={() => handleSaveText(new Blob([editor.getHTML()], {type: "application/json"}))}>Save</Button>
+          <Button className='text-green-400 bg-neutral-700' onClick={() => handleSaveText(editor.getHTML())}>Save</Button>
         </RichTextEditor.ControlsGroup>
 
       </RichTextEditor.Toolbar>

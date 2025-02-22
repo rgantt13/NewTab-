@@ -70,3 +70,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.mantine-RichTextEditor-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem;
+}
+
+.mantine-RichTextEditor-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem;
+}
