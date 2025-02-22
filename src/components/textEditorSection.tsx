@@ -7,10 +7,14 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import Code from "@tiptap/extension-code"
+import { Button } from '@mantine/core';
 
 const content =
   '<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>';
 
+  //TODO Bullets and Number list appear to be broken. Must thoroughly go through each feature of rich text editor to ensure the remaining features are working.
+  //TODO Save to file button.
+  //TODO Save existing text content to local storage to persist through sessions.
 const TextEditorSection = () => {
   const editor = useEditor({
     extensions: [
@@ -31,6 +35,18 @@ const TextEditorSection = () => {
       },
   });
 
+  const handleSaveText = async (text: Blob) => {
+    const textDoc = document.createElement("a");
+    textDoc.download = "note.md";
+    textDoc.href = URL.createObjectURL(text);
+    textDoc.addEventListener('click', () => {
+      setTimeout(() => URL.revokeObjectURL(textDoc.href), 30 * 1000)
+    })
+    textDoc.click();
+
+    
+  }
+
   return (
     <div className=' w-6/12 h-4/6'>
     <RichTextEditor 
@@ -39,7 +55,7 @@ const TextEditorSection = () => {
         }} 
         editor={editor}
     >
-      <RichTextEditor.Toolbar sticky stickyOffset={60}>
+      <RichTextEditor.Toolbar className='flex justify-center' sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
@@ -82,7 +98,14 @@ const TextEditorSection = () => {
           <RichTextEditor.Undo />
           <RichTextEditor.Redo />
         </RichTextEditor.ControlsGroup>
+
+        <RichTextEditor.ControlsGroup>
+          <Button className='text-green-400 bg-neutral-700' onClick={() => handleSaveText(new Blob([editor.getHTML()], {type: "application/json"}))}>Save</Button>
+        </RichTextEditor.ControlsGroup>
+
       </RichTextEditor.Toolbar>
+
+      
 
       <RichTextEditor.Content className='h-96 max-h-96 overflow-y-scroll'/>
     </RichTextEditor>

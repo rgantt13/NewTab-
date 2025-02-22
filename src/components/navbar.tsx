@@ -11,9 +11,12 @@ const NavBar = ({unlocked, onToggle}: {unlocked: boolean, onToggle: (value: bool
     return (
       <div className="w-full">
         <div className="flex justify-between">
+          <div className="flex">
             <h1 className="text-green-400">
-            NewTab++
+            NewTab
             </h1>
+              <img src="/newtab++.svg" alt="NewTab++ Logo" className="mt-2 ml-1" />
+            </div>
             <div className="flex items-center ">
               <Switch 
                 size="lg"

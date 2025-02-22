@@ -3,6 +3,9 @@ import { Modal, TextInput, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 
+//TODO Improve rough implementation of adding new shortcut such that it is saved between sessions.
+//TODO Save shortcuts to database.
+//TODO Create method of using existing url's favicon as icon for new shortcut instead of prompting user for svg
 const NewShortcut = () => {
 
     const [opened, {open, close}] = useDisclosure(false);

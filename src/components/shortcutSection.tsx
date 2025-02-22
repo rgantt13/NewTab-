@@ -3,7 +3,7 @@ import NewShortcut from "./newShortcut";
 import NewShortcutCategory from "./newShortcutCategory";
 
 //hardcoded slop for first iteration and making initial page function
-//TO-DO: Rip out components for shortcutCategory and shortcut. Must remove hardcoded svgs and URLs and store this data instead such that users can fetch and create their own shortcuts
+//TODO: Rip out components for shortcutCategory and shortcut. Must remove hardcoded svgs and URLs and store this data instead such that users can fetch and create their own shortcuts
 const ShortcutSection = ({unlocked}: {unlocked: boolean}) => {
 
     const [pastedSvg, setPastedSvg] = useState<string>("");
