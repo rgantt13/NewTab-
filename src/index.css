@@ -81,3 +81,10 @@ button:focus-visible {
   list-style-type: decimal !important;
   padding-left: 1.5rem;
 }
+
+.mantine-Switch-track {
+  transition: all 0.3s ease-in-out !important;
+}
+.mantine-Switch-thumb {
+  transition: all 0.3s ease-in-out !important;
+}

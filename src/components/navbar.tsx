@@ -21,7 +21,7 @@ const NavBar = ({unlocked, onToggle}: {unlocked: boolean, onToggle: (value: bool
               <Switch 
                 size="lg"
                 className="px-8 "
-                classNames={{ track: "bg-gray-600 cursor-pointer", thumb: `flex items-center justify-center transition-colors duration-300 ${unlocked ? "bg-green-400" : "bg-gray-400"}` }} 
+                classNames={{ track: "bg-gray-600 cursor-pointer", thumb: `flex items-center justify-center transition-colors duration-300 ${unlocked ? "bg-green-400 brightness-125 opacity-100" : "bg-gray-400 opacity-75"}` }} 
                 checked={unlocked} 
                 onChange={(event) => onToggle(event.currentTarget.checked)}
                 thumbIcon={
