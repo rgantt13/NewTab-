@@ -75,7 +75,7 @@ const TextEditorSection = () => {
   }
 
   return (
-    <div className=' w-6/12 h-4/6'>
+    <div className='w-full h-4/6 m-4'>
     <RichTextEditor 
         classNames={{
             content: 'h-96 max-h-96 overflow-y-auto p-4 list-disc list-inside', // Target the actual content-editable div    content: "list-disc list-inside", // Applies proper bullet list styling
