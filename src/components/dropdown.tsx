@@ -2,7 +2,7 @@ import { useState } from "react";
 
 interface Option {
      label: string;
-     value: string;
+     action: () => void;
 }
 
 interface DropdownProps{
@@ -25,7 +25,7 @@ interface DropdownProps{
         {dropdownOpen &&
         <ul className="absolute min-w-32 w-max right-0 top-full bg-neutral-800 z-10 ">
             {optionsCollection.map((option) =>(
-                <li className="flex justify-end cursor-pointer border border-gray-600 hover:border-green-400 p-2 z-10">
+                <li className="flex justify-end cursor-pointer border border-gray-600 hover:border-green-400 p-2 z-10" onClick={option.action}>
                     {option.label}
                 </li>
             ))}

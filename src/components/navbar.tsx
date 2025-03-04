@@ -4,8 +4,8 @@ import { Switch } from "@mantine/core";
 const NavBar = ({unlocked, onToggle}: {unlocked: boolean, onToggle: (value: boolean) => void}) => {
 
   const options = [
-    {label: "Change timezone", value:"value"},
-    {label: "Sign out", value:"valuevalue"}
+    {label: "Change timezone", action: () => console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)},
+    {label: "Sign out", action: () => console.log("Signing out")},
   ];
 
     return (

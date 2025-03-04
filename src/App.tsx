@@ -3,7 +3,6 @@ import NavBar from './components/navbar'
 import ShortcutSection from './components/shortcutSection'
 import TextEditorSection from "./components/textEditorSection"
 import { useState } from 'react'
-import { Button } from '@mantine/core'
 
 function App() {
 
