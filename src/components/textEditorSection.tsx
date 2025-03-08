@@ -10,6 +10,7 @@ import Code from "@tiptap/extension-code"
 import BulletList from "@tiptap/extension-bullet-list"
 import { Button } from '@mantine/core';
 import TurndownService from "turndown"
+import { TextSelection } from '@tiptap/pm/state';
 
 const turndownService = new TurndownService({headingStyle : "atx",});
 
@@ -135,7 +136,7 @@ const TextEditorSection = () => {
 
       
 
-      <RichTextEditor.Content className=' overflow-y-scroll'/>
+      <RichTextEditor.Content className=' h-full flex-grow overflow-y-scroll cursor-text'/>
     </RichTextEditor>
     </div>
   );
