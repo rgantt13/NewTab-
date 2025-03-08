@@ -75,10 +75,11 @@ const TextEditorSection = () => {
   }
 
   return (
-    <div className='w-full h-4/6 m-4'>
+    <div className='w-full h-full  m-4'>
     <RichTextEditor 
+        className='flex flex-col h-full'
         classNames={{
-            content: 'h-96 max-h-96 overflow-y-auto p-4 list-disc list-inside', // Target the actual content-editable div    content: "list-disc list-inside", // Applies proper bullet list styling
+            content: 'flex-grow h-full overflow-y-auto p-4 list-disc list-inside', // Target the actual content-editable div    content: "list-disc list-inside", // Applies proper bullet list styling
         }} 
         editor={editor}
     >
@@ -134,7 +135,7 @@ const TextEditorSection = () => {
 
       
 
-      <RichTextEditor.Content className='h-96 max-h-96 overflow-y-scroll'/>
+      <RichTextEditor.Content className=' overflow-y-scroll'/>
     </RichTextEditor>
     </div>
   );
