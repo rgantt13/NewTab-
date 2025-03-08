@@ -39,7 +39,6 @@ turndownService.addRule("tight-list", {
   //TODO Bugfix .md output. Implementation halfway there but certain features are not appearing in .md viewer (Obsidian)
     // Correctly converting... headings, bold, italics, underline, bullet list, numbered list, code, quote, linebreak and link
     // Problems converting... strikethrough, subscript, superscript, and highlight
-  //TODO Save existing text content to local storage to persist through sessions.
 const TextEditorSection = () => {
   const editor = useEditor({
     extensions: [
@@ -53,6 +52,10 @@ const TextEditorSection = () => {
       BulletList,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
+    content: localStorage.getItem('textEditorContent') || '',
+    onUpdate({ editor }) {
+      localStorage.setItem('textEditorContent', editor.getHTML());
+    },
     editorProps: {
         attributes: {
             class: 'h-full prose prose-sm focus:outline-none text-left',
@@ -71,8 +74,6 @@ const TextEditorSection = () => {
       setTimeout(() => URL.revokeObjectURL(textDoc.href), 30 * 1000)
     })
     textDoc.click();
-
-    
   }
 
   return (
