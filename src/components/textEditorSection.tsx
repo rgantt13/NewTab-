@@ -10,7 +10,6 @@ import Code from "@tiptap/extension-code"
 import BulletList from "@tiptap/extension-bullet-list"
 import { Button } from '@mantine/core';
 import TurndownService from "turndown"
-import { TextSelection } from '@tiptap/pm/state';
 
 const turndownService = new TurndownService({headingStyle : "atx",});
 

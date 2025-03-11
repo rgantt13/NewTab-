@@ -1,10 +1,12 @@
 //import { useState } from "react";
 //import NewShortcut from "./newShortcut";
+import NewShortcut from "./newShortcut";
 import NewShortcutCategory from "./newShortcutCategory";
 
 //TODO: Rip out components for shortcutCategory and shortcut. Must remove hardcoded svgs and URLs and store this data instead such that users can fetch and create their own shortcuts
 const ShortcutSection = ({unlocked}: {unlocked: boolean}) => {
 
+     const [shortcutCategories, setShortcutCategories] = useState<ShortcutCategories[]>([]);
     // const [pastedSvg, setPastedSvg] = useState<string>("");
 
     // const handleSetSvgTest = () => {
@@ -19,9 +21,29 @@ const ShortcutSection = ({unlocked}: {unlocked: boolean}) => {
     // }
 
     const renderShortcuts = () : React.ReactNode => {
-        return (
-            <></>
-        )
+          return shortcutCategories.map((category) => {
+            return (    
+              <div className="p-4">
+                    <h2>{category.name}</h2>
+                    <div className="flex justify-start items-center">
+                        {category.shortcuts.map((shortcut) => {
+                            return (
+                              <div className="p-4">
+                              <a href={shortcut.url}>
+                                <div dangerouslySetInnerHTML={{
+                                  __html: shortcut.svgContent.replace(/fill=".*?"/g, `fill="${"#e5e7eb"}"`),
+                                }}>
+                                </div>
+                              </a>
+                          </div>
+                            )
+                        })}
+                        {unlocked &&
+                          <NewShortcut/>
+                        }
+                    </div>
+              </div>
+        )})
     }
 
     return (
